@@ -1,0 +1,628 @@
+# roblox-brainrot-01: make the best AI Roblox brainrot game, a 3D game in the genre Steal a Brainrot began, built by a
+# coding agent in recorded sessions and judged by the house AI judge on a dossier (program/v1 + harness.judge, media
+# dossier, a screened final on a calibrated dev ladder), on the $1,000 fifty-place table, 72 hours of entries, with strict
+# transcripts and a play link bound to the entrant and to the game's own icon and thumbnail. It is cut from
+# roblox-game-02 (the newest Roblox sibling, a hidden draft itself), whose header says what it changed from
+# roblox-game-01, whose header says the rest: what the judge is shown, the play link and its picture job, the gate and
+# the strict transcripts, none of which this cut moves but where it says so below. This header says what the cut changes.
+#
+# The owner's ask (2026-11-16), verbatim: "let's setup another roblox game contest, $1000 total prize with a 3d runtime,
+# challenge is to "Make the best AI Roblox brainrot game" inspired by the most popular brainrot titles currently on
+# roblox, top 50 get something - reuqire that they provide thumbnail/icon for the game too, set on their public place,
+# and the thumbnail needs to be uploaded as one of the images they provide us for judging. ... put both on dev for me to
+# review before they go live". What wins and what it beats: the genre's hits are hand-built by studios and their
+# thousands of clones are one template (the "verb + for Brainrots" names); the winner is the best brainrot game a coding
+# agent builds in a 72-hour window, a public, playable Roblox experience make.fun features on its site and in its posts,
+# its build recorded line by line.
+#
+# OPEN (the owner, 2026-11-17: "cool we can land and enable these when we do these too", beside ai-judge-rich-01's launch): status open and visibility public, in production's seed
+# catalogue (deploy/k8s/overlays/makefun-prod/seed-catalogue.txt) in a block of its own, its catalogue row in
+# tests/unit/catalogue.test.ts OPENED_IN_TURN. Entries open 72 hours from 2026-11-17T14:30Z, the first half hour 30
+# minutes clear of every other opening that day (ai-judge-rich-01 11:30Z, ai-judge-relax-01 14:00Z, gta6-01 15:00Z), set
+# by scripts/redate-bundle.ts. It landed first as a sealed internal draft for the owner's review on dev. A seed that
+# inserts it open funds its $1,000 escrow within a minute; its bytes never change from then (a fix is a new slug).
+#
+# The task (the research of 2026-11-17, read live on Roblox's own APIs, Rolimons, the fandom wikis and the press). A
+# brainrot game is a fast collection game whose cast is absurd, meme-born characters that each earn money a second: the
+# player buys, rolls or catches them, keeps them on a base, and climbs a ladder of rarities, mutations and rebirths while
+# a threat (other players stealing, a tsunami wave, a guardian beast) forces a dash home with the catch. The copy names
+# the hits as inspiration, never a live player count (concurrent players swing 10 to 30 times within weeks, and a bundle
+# is frozen once it opens): Steal a Brainrot (the genre's origin), Escape Tsunami For Brainrots, Plants & Brainrots,
+# Break a Brainrot Egg and its egg-and-animal successor Steal An Egg. The owner's "3d runtime" is the game played in
+# Roblox's 3D world, a character moving through a world built in 3D under a 3D camera, its interface a ScreenGui over
+# it, not a game drawn wholly on a ScreenGui as every earlier house Roblox game is (the four house games and the
+# starter): the description, Requirements, The task and the judge's first criterion say so. A ScreenGui-only game is not
+# refused (the gate is roblox-game-02's, byte for byte, and checks no camera), only judged low.
+#
+# What is roblox-game-02's, byte for byte. scorer/, reference/ and judge/anchors/ are copies of roblox-game-02's (each
+# file compared with cmp), so scorer_sha256 and reference_sha256 are its digests and the four fixed house games are its
+# (roblox-game-01's) four. starter/ is roblox-game-02's but for main.ts (it names roblox-brainrot-01, and says one
+# screenshot is the game's thumbnail) and README.md (the new slug and title, and that the starter is not yet a 3D
+# game); game.rbxl, src/, screenshots/, PLAY.json and TOUR.json are its bytes, so the starter's dossier is still the
+# second fixed house game (judge/anchors/2-plain.json). No ladder/ and no calibration.json are copied: the calibration
+# names its judge's digest, and this judge is a new one.
+#
+# What this cut changes, each a key or a sentence the rules hold to the code that does it:
+#   1. The task and the judge. judge/prompt.txt is new: a ranked rubric for a 3D Roblox brainrot game, built from
+#      roblox-game-02's and the research's five weights, most important first: the complete 3D game loop the captures
+#      show (acquire, place, money ticking at its rate, the next tier, in a 3D world; a flat screen game ranks low), the
+#      brainrot cast and its rarity ladder, tension and progression, look and polish with the thumbnail, the scripts'
+#      structure; then the close-pair rule. No moderation or anti-injection wording. It is 1,824 bytes, one under
+#      roblox-game-02's 1,825, and quoted word for word under The judge. harness.judge.agent is roblox-game-02's
+#      (superbot, reasoning effort high, 12,100 output tokens a verdict, prompt.txt); every heat is sent to OpenRouter
+#      z-ai/glm-5.3-flash whatever the block names (.cosmos/rules/house-models.mdc), each question once, the first
+#      verdict kept (grader/judge-backup.ts). judge_sha256 is the new judge/'s digest.
+#   2. The icon and the thumbnail (harness.entry_link.binding: code, not_roblox, one_account and thumbnail,
+#      contracts/competition.ts ENTRY_LINK_BINDING_KEYS). binding.thumbnail holds the experience to an icon and a
+#      thumbnail its owner uploaded, past Roblox's review, its first thumbnail the same picture as one of the entry's
+#      screenshots by a perceptual hash; Requirements, The play link and Submitting quote its requirement sentence word
+#      for word (server/entries/checks.ts ROBLOX_THUMBNAIL_REQUIREMENT), The play link names its refusals
+#      (ROBLOX_THUMBNAIL_REFUSALS) and where to upload (ROBLOX_IMAGES_WHERE), Getting started puts the uploads last,
+#      before the submit, waiting until the experience's page shows them, Deliverables lists them, and the Play link
+#      criterion says the ask. The thumbnail is one of the 3 or 4 screenshots (16:9 such as 1280x720, within the gate's
+#      256 KiB, ROBLOX_THUMBNAIL_PICTURE), best made the first by name so it leads the Feed and is the judge's cover.
+#      roblox-game-02's rule that every screenshot is a capture of the game carves the thumbnail out (The task, Finalist
+#      review, Disqualification, the Review criterion): it may be a picture composed of the game's own world and
+#      characters. roblox-game-02's optional picture hint and its re-ask sentence are gone: a picture still in review
+#      refuses the link, so the Feed's picture is the thumbnail the check passed.
+#   3. The money: $1,000 on the fifty-place table (makefun-coin-promo-01's: $150 / $80 / $50, $20 each for 4th to 10th,
+#      $17 each for 11th to 25th, $13 each for 26th to 50th), its runs one row each in the range form, one place per
+#      entrant, paid by the house; the house-holds sentence, the escrow-at-open sentences and the eligibility paragraph
+#      word for word roblox-game-02's.
+#   4. Every figure of the paid places is fifty places' (The heat, below): the money-place line the 50th best low, the
+#      screen's line at place 200, the playoff the first 52, the finalist review places 1 to 20.
+#   5. The dates: 72 hours of entries, and an account made after the opening can publish 2 days later, inside the
+#      window, so the copy says only that such an account cannot publish until it is 2 days old (Requirements, The play
+#      link, Getting started, the Roblox account's tell_person and can), never that it cannot finish.
+#   6. Strict transcripts as roblox-game-02 (strict_transcripts true, authorship 12, transcripts_required true), with
+#      today's words for this slug: Transcripts quotes server/entries/requirements.ts strictTranscriptLines
+#      ('roblox-brainrot-01') word for word, each a bullet, then strictMcpLines in one bullet; the description's strict
+#      paragraph ends on today's RECORDED_HARNESSES_WORDS (Antigravity recorded since roblox-game-02 was drafted); the
+#      Transcript gate quotes today's twelve lines (server/entries/policy.ts thinkingPolicyLines at strict true and
+#      authorship 12, transcripts_run_record's without the two asides since retired), so server/competitions/
+#      rules-note.ts staleGateLines finds none and the bounty owes no rules note.
+#   7. The prerequisites, checked again on 2026-11-17: Roblox's Studio MCP page (its tools and list_roblox_studios, the
+#      two launch lines, Manage MCP Servers), @chrrxs/robloxstudio-mcp 3.4.4 still published (3.5.0 the latest), Rojo
+#      7.7.1, Node 22.18 or later; the Roblox account's can and tell_person add the icon and thumbnail uploads.
+#
+# The heat. Fifty paid places, so the playoff is left unnamed: the last paid place and 2 more (judgePlayoffPlaces: 52),
+# each pair once (playoff_repeats 1, as judging.md's large-playoff siblings: a 52-place round robin is 2,652 calls a
+# repeat). The final is a screened one on the calibrated ladder the dev heats play: its shortlist line sits at place
+# 200, max(shortlist_per_paid 4 x the last paid place 50, shortlist_min 32), so every playoff place is inside it; 3
+# Swiss rounds over the shortlist (harness.judge.rounds 3), racing at the prize boundaries, the playoff, and top_repeats
+# 3. The race cap is 16 games at every drop (screened.race_cap 16, race_cap_max 16), and limits.wall_budget_sec is 15
+# (from 120). The grading-time ceiling (server/competitions/final-ceiling.ts, on main 2026-11-17 on the owner's order: "update the
+# create bounty skill so bounties can never explode in the time they take to do something ... we dno't care if we're off
+# by 1-2%"): a final at most 2 h expected and 4 h worst at 2,000 entries. Measured on production's runs (the run
+# table's wall_ms, 2026-11-17): best-game-01's 12,872 runs p50 1.04 s, p99 2.06 s; threejs-fps-02's 18,415 p50 1.06 s,
+# p99 2.32 s; roblox-game-01's 488 p50 1.09 s, p99 2.52 s, the most 3.82 s; only stuck entries reached the 120 s wall. At 48 games and the 120 s wall the final priced 3.81 h expected and 5.66 h worst; at 16 games
+# and 15 s, 1.89 h expected and 2.12 h worst (grades 0.58 h expected, 0.81 h at the wall; judge heat 15,070 calls, 2 x
+# floor(2004 / 2) x 3 Swiss rounds + 2 x max(200 x 16, ceil(2004 / 2)) race games + 52 x 51 playoff calls + 2 x 3 top
+# repeats, 1.31 h). The dev phase is roblox-game-02's: the four anchors once
+# each, then 2 adaptive rounds of 4 games against the house members nearest even, 12 games and 24 judge calls, and 2
+# more such rounds (screened.dev_rounds), 40 calls in all, for an entry whose interval reaches the money-place line (the
+# 50th best low among the dev field's rated entries): house-only. Contend plays on the dev board (harness.judge.contend
+# band 200, games 8, top 40): the top 200 dev entries by their house-only rate play up to 8 games each against one
+# another, sealed until the deadline, their board rates counting them; band 200 is the widest the preflight takes
+# (5 x top 40), and 8 games keep the cost near band 100 at 12 (judging.md, "Contend"). Contender rounds are off.
+#
+# The ladder. The owner, 2026-11-17, on the house games it compares an entry with: "can't we just compare it to actual
+# GTA game images and mechanics? and for brainrot, images of actual popular brainrot games / known popular mechanics etc
+# for them?". So two published hits join the house games as rungs, each a dossier of its own Roblox thumbnails and icon
+# and a short text of its mechanics, no scripts (tests/fixtures/judge-references/, written by
+# scripts/judge/reference-dossier.ts): rungs/ref-steal-a-brainrot.json (Steal a Brainrot, universe 7709344486) and
+# rungs/ref-escape-tsunami-for-brainrots.json (Escape Tsunami For Brainrots!, universe 9363735110), beside
+# rungs/lantern-keep.json (roblox-game-02's rung byte for byte), rungs/ember-spire.json (a 3D platform climb) and
+# rungs/crownfall.json (a deck-building roguelike), the last two the dossiers buildDossier writes from
+# tests/fixtures/roblox-places/rungs-02/upper and top. The final kit reveals the whole ladder, those thumbnails included.
+# Calibrated 2026-11-17 (08:15Z to 09:50Z) on this judge as it ships (judge/ at its judge_sha256, harness.judge.agent
+# as above, media dossier, artifact dossier.json), every call planned on OpenRouter z-ai/glm-5.3-flash (judge-heat.mdc),
+# one call in flight, each member sent as its dossier-view/v1 view: makefun grade-local --kit <scratch copy> --calibrate
+# --rungs <the five rungs> --repeats 6 --seed 2026111703. 9 members (4 anchors, 5 rungs), every pair 6 times in both
+# slot orders, 432 calls (436 requests), 0 invalid, $0.134974; 191 of 216 pairs named the same winner in both orders;
+# one attempt. Strengths, weakest first: 1-weak 0.032371763, 2-plain 0.045823305, 3-mid 0.131508045, 4-strong
+# 0.307197707, lantern-keep 1.608568302, crownfall 2.125577613, ref-escape-tsunami-for-brainrots 4.455857371,
+# ember-spire 5.392954849, ref-steal-a-brainrot 5.578080122: the anchors in their named order, every rung above them,
+# Steal a Brainrot the top, and neither hit far above the house's best (p 0.508 over Ember Spire); adjacent p 0.586,
+# 0.742, 0.700, 0.840, 0.569, 0.677, 0.548, 0.508; phi 0.1 (the floor), pooled over 17 informative pairs. Record sha256
+# 3b19194f0bb0b551187757e7b37500ceedfd7f48527a87653711515e64fe4f43; --regrade-from on it (with --rungs) rebuilt it
+# byte for byte with no model call. ladder_sha256 33c58cc577ad9e74eec4f4a3eb71c58371e48e41acd8135eb07c63a0c2301357 is
+# the ladder/ tree's. The rules' Heats names nine house members (four anchors, three house games, two published hits).
+#
+# The finalist review holds places 1 to 20 (harness.judge.review: places 20, minutes 60; 20 is the contract's cap,
+# PROGRAM_JUDGE_REVIEW_MAX_PLACES), for roblox-game-01's reason: a recording proves who wrote a game's scripts, not that
+# the place's world, models or interface were built in the recorded sessions, so the team's review is the control for
+# it. Paid places 21 to 50 are not held, and the rules say so.
+#
+# The tie-break: an exact tie on the win rate goes to the playoff games between the tied entries (head_to_head), then
+# to the earlier receipt. No leaderboard.tie_break_index: a dossier's bytes are mostly its screenshots and measure no
+# efficiency; the Size column shows them and decides no place.
+#
+# The dates are placeholders the owner sets at go-live: entries open 72 hours, the dev phase with them, from
+# 2026-11-17T14:30Z to the deadline 2026-11-20T14:30Z; the final phase starts at the deadline (an undrawn final waits
+# for nothing: contest-design.mdc) and runs 12 hours, to 2026-11-21T02:30Z, room for the bound and the 60-minute review. No
+# copy quotes a date or the window's length.
+#
+# The pricing, as priced on 2026-11-17 (`node scripts/new-bounty-preflight.ts roblox-brainrot-01`, server/competitions/
+# grading-budget.ts gradingCost). The final design (screened {race_cap 16, race_cap_max 16}, contend, the 15 s wall): a
+# final of 1.89 h expected and 2.12 h worst at 2,000 entries (The heat, above);
+# each dev grade's provisional heat 24 judge calls, at most 40 with the money-place scrutiny; contend at most max(200,
+# A) x 8 calls over the dev window, at most 16,000 at 2,000 entries (reported, never checked). This draft as it stands
+# (no ladder, so no screen and no contend) prices 2.14 h expected and 3.99 h worst. The bound and the review fit the
+# 12-hour final phase at 2,000 entries; at 20,000 the bound is 21.07 h expected. After the deadline quotes the 2.12 h
+# bound beside roblox-game-01's screened final, 2 h 02 m deadline to result with 180 final entries (its heat 44 minutes,
+# its review 60). One judge call at its worst view (server/judging/judge-call-budget.ts, the preflight's
+# judge-call-budget row) is 4,584 input tokens (the system 862, two entries at the default 1,536-token view, the framing
+# 650), under JUDGE_CALL_INPUT_TOKENS_MAX's 5,120; the slug has no DOSSIER_VIEW_BUDGETS row, so the judge is shown the
+# 1,536 view The dossier describes.
+#
+# The field. roblox-game-01 (6 hours, $250, uploads) took 263 submissions and 180 final entries; threejs-fps-02, a
+# judged 3D game dossier for $1,000 over 48 hours with no outside account, took 10,406 submissions. A Roblox entry needs
+# Studio, an account that can already publish and strict recordings, so the expected field is the budget's 2,000 final
+# entries, and 20,000 the tenfold.
+#
+# The grading load at 2,000 and 20,000 entries. Each event an entry causes reads its own entry or a fixed number of
+# rows: the submission and its play-link stage (the entry's own snapshot, its link file and its screenshots for the
+# thumbnail's perceptual hash, and a few Roblox GETs: the place, the universe, its icon and thumbnails and the picture's
+# bytes; one_account's read of the entries naming the same universe, server/entry-link/stage.ts
+# earlierAccountHoldsUniverse), the transcript ingest, a grade landing, an audit, a heat step. The field-scanning paths
+# are the shared ones, each on its lean read (reference.md, "Grading load"): the code heat's field (codeHeatField,
+# entriesToGradeLean) once per heat attempt, the dev scrutiny and contend sweeps once per 15-minute slot, the final's
+# cut and resolve once per phase. The pods (the preflight's pod-footprint, layout split, 3 pods a grade one after the
+# other): 48 sandbox pods at once on s9 at both fields, 6,000 made at 2,000 entries and 60,000 at 20,000, 120 pod-seconds
+# an entry, beside the live contests' 48. binding.thumbnail's check is a new per-entry read on the entry-link path
+# (its own entry's snapshot files and a few Roblox GETs), so the rig proof (a seeded grade wave, pg_stat_statements,
+# pods per grade and the peak) is owed before go-live, not run for this draft.
+#
+# No spend cap: house judging has none (.cosmos/rules/grading.mdc), so the judge names neither max_total_usd nor
+# dev_daily_usd, and the rules name no cap.
+#
+# Digests: scorer_sha256, reference_sha256 and judge_sha256 are the scorer/, reference/ and judge/ trees'
+# (server/competitions/load.ts treeSha256); a change to a tree changes its digest here, or the bundle refuses to load.
+# Once it opens, no byte of this directory changes: a fix is a new slug.
+version: 1
+
+competition:
+  slug: roblox-brainrot-01
+  title: Make the best AI Roblox brainrot game
+  summary: "A 3D Roblox brainrot game of your own, inspired by Steal a Brainrot and the genre's hits, built by your coding agent in Roblox Studio and published as a Public experience with its own icon and thumbnail; hand in its place file, its Luau source and 3 or 4 screenshots, an AI judge compares the games two at a time, places go by win rate, best first, and the 50 best share $1,000."
+  demand: make.fun itself, which will feature the winning game on its site and in its posts.
+  category: Games
+  skills: [Luau, Roblox Studio, Game design]
+  status: open
+  visibility: public
+  sponsor: make-fun
+  reward_usd: 1000
+  opens_at: "2026-11-17T14:30:00Z"
+  deadline: "2026-11-20T14:30:00Z"
+  prerequisites:
+    as_of: "2026-11-17"
+    label: Needs Roblox Studio
+    summary: Windows or macOS for Studio (its built-in MCP server recommended), plus Node.js 22.18 or later, Git, a coding agent the kit's record command records, and a Roblox account that can already publish a Public game.
+    software:
+      - id: roblox-studio
+        name: Roblox Studio
+        required: true
+        platforms: [darwin, win32]
+        url: https://create.roblox.com/docs/studio/setup
+        why: You run the game, take its screenshots and publish it from Studio. Rojo alone can build game.rbxl but cannot run it.
+        how_to_check: 'macOS: /Applications/RobloxStudio.app exists. Windows: %LOCALAPPDATA%\Roblox\Versions holds RobloxStudioBeta.exe.'
+        fix: Roblox Studio has no Linux build. On Windows 10+ or macOS 10.14+ (Roblox's minimum; it recommends Windows 11 or macOS 14+), download it from create.roblox.com.
+        tell_person: This bounty needs Roblox Studio on a Windows or Mac computer I can use. Please install it from https://create.roblox.com and sign in.
+      - id: node
+        name: Node.js 22.18 or later
+        required: true
+        platforms: [darwin, win32, linux]
+        version: 22.18 or later
+        url: https://nodejs.org/en/download
+        why: Your main.ts runs on Node 22 (the bounty's node22 runtime) and you run it yourself to write out/; the kit's CLI, which checks and enters the entry, runs on Node too. Node runs main.ts's TypeScript as it is from 22.18.
+        how_to_check: The node executable is on your PATH and reports version 22.18 or later; a newer major release, such as 24 or 26, counts.
+        fix: Install Node.js 22.18 or later (a newer release such as 24 or 26 works as well) from nodejs.org or with a version manager (nvm, fnm or Volta), and put it on your PATH.
+        tell_person: This bounty needs Node.js 22.18 or later on this computer; a newer release such as Node.js 24 or 26 is fine. Please install one from https://nodejs.org.
+      - id: git
+        name: Git version control
+        required: true
+        platforms: [darwin, win32, linux]
+        url: https://git-scm.com/downloads
+        why: Your entry is a commit of a git repository, a public GitHub repository or a source bundle the kit's CLI makes from one, and the kit's init starts that repository with git.
+        how_to_check: The git executable is on your PATH and reports a version.
+        fix: Install Git from git-scm.com (on macOS, Apple's Command Line Tools include it) and put it on your PATH.
+        tell_person: This bounty needs Git on this computer. Please install it from https://git-scm.com.
+      - id: coding-agent
+        name: A coding agent whose sessions the kit's record command records
+        required: true
+        platforms: [darwin, win32, linux]
+        url: https://superbot.gg/
+        why: This bounty takes no transcript upload. The kit's record command records the agent's sessions while it builds the game, and an entry's transcripts are built from those recordings alone, so a game built in an agent record does not record cannot be entered.
+        how_to_check: The agent you run in is one the rules' Transcripts section lists under Recorded harnesses, such as Claude Code, Codex, Gemini CLI or Superbot; a session of any other agent is not recorded.
+        fix: Build the game in an agent the record command records, such as Claude Code, Codex, Gemini CLI or Superbot (a free client that runs on your own computer, https://superbot.gg), in a new session begun after the kit's record command starts, as the rules' Getting started orders it. No transcript upload is taken, so a session of another agent cannot be entered later.
+        tell_person: This bounty records the sessions of the coding agent that builds the game while it works, and takes no transcript upload. Please run me in an agent make.fun's record command records, such as Claude Code, Codex, Gemini CLI or Superbot (https://superbot.gg); a game built in another agent cannot be entered.
+      - id: rojo
+        name: Rojo 7.7
+        required: false
+        platforms: [darwin, win32, linux]
+        url: https://github.com/rojo-rbx/rojo
+        why: Keeps every script as a file under src/ that you write with your own file tools, so your transcript credits it and the gate can match src/ to game.rbxl.
+        how_to_check: The rojo executable is on your PATH and reports a 7.x version.
+        fix: "Install Rojo (aftman, rokit, cargo or the release binary). One way per project: `rojo build` writes game.rbxl from src/ and replaces it, so never over a place saved from Studio; `rojo syncback default.project.json --input game.rbxl -y` writes src/ from a place saved in Studio (-y skips a prompt your shell cannot answer). Without Rojo, write each src/ file and paste the same text into Studio."
+        tell_person: ''
+    mcp_servers:
+      - id: roblox-studio-mcp
+        name: Roblox's own Studio MCP server
+        required: false
+        needs: [roblox-studio]
+        registry_name: null
+        url: https://create.roblox.com/docs/studio/mcp
+        why: Studio's own MCP server lets your agent read and edit the open place and its scripts, run Luau in it, start and stop a play test, capture the Studio viewport, read the output log and send keyboard and mouse input, so it builds and checks the game in Studio itself.
+        transport: stdio
+        config:
+          darwin: {command: /Applications/RobloxStudio.app/Contents/MacOS/StudioMCP, args: []}
+          win32: {command: cmd.exe, args: ['/c', '%LOCALAPPDATA%\Roblox\mcp.bat']}
+        setup: 'The server needs the latest version of Roblox Studio. In Studio: Assistant, then the ... menu, Manage MCP Servers, turn on "Enable Studio as MCP server".'
+        how_to_check: Call list_roblox_studios; it lists an open Studio. A server that has just started may list none for a few seconds, so call it again.
+        fix: "Add this server's config to your MCP client's settings (Antigravity, Codex CLI, Claude Code, Claude Desktop, Cursor, Gemini CLI and VS Code are quick-connect clients), then restart the client with Studio open: most clients start their MCP servers only when they start. A client with no MCP configuration yet starts one with it: one entry, Roblox_Studio as Roblox names it, in an mcpServers object."
+        tell_person: Please open Roblox Studio, updated to its latest version, and turn on "Enable Studio as MCP server" in the Assistant's Manage MCP Servers menu. Then restart me once Roblox's Studio MCP server is in my MCP settings; if I cannot add it there myself, please add it, with the launch line this bounty's requirements give.
+        tools_any: [list_roblox_studios]
+      - id: robloxstudio-mcp
+        name: The community robloxstudio-mcp server
+        required: false
+        needs: [roblox-studio, node]
+        registry_name: null
+        url: https://github.com/Chrrxs/robloxstudio-mcp
+        why: "Lets your agent start and stop play tests, run Luau in the live game, read its logs and capture the viewport for your screenshots: take each with the game running, since a capture that takes focus from Studio can pause it."
+        transport: stdio
+        config:
+          darwin: {command: npx, args: ['-y', '@chrrxs/robloxstudio-mcp@3.4.4', '--auto-install-plugin']}
+          win32: {command: npx, args: ['-y', '@chrrxs/robloxstudio-mcp@3.4.4', '--auto-install-plugin']}
+        setup: Add this server's config to your MCP client's settings and restart the client; the server installs its Studio plugin when it first starts. Then fully close and reopen Studio, and wait until the plugin shows Connected.
+        how_to_check: Call get_place_info with Studio open; it names the open place.
+        fix: "Add this server's config to your MCP client's settings (it needs Node's npx), restart the client so it starts the server, which installs its Studio plugin, then fully close and reopen Studio so the plugin loads. A client with no MCP configuration yet starts one with it: most clients take it as one entry, named for the server, in an mcpServers object."
+        tell_person: Please restart me once the community robloxstudio-mcp server is in my MCP settings; if I cannot add it there myself, please add it, with the launch line this bounty's requirements give. It installs its Roblox Studio plugin when it first starts. Then fully close and reopen Roblox Studio, and tell me when the plugin shows Connected.
+        tools_any: [get_place_info]
+    accounts:
+      - id: roblox
+        name: A Roblox account signed in to Studio
+        provider: Roblox
+        required: true
+        url: https://www.roblox.com/signup
+        why: "The game is published from this account as a Public experience, and refused at submit if it is not. PLAY.json names its start place: place_id is the number in the play link, universe_id the experience's id (in its Creator Dashboard address, or game.GameId in Studio; game.PlaceId is the place)."
+        how_to_check: Studio shows the signed-in account at its top right, and the experience's settings in Studio or the Creator Dashboard say whether it can be made Public.
+        fix: "Before the build, publish the kit's starter place from Studio as it is, signed in to this account, and have its owner set it Public with your play code in its description, as the kit's RULES.txt (Before you submit) orders it. If Studio cannot publish it, or Roblox will not let the owner make it Public, this account cannot enter: stop there and tell your person."
+        tell_person: "Sign Studio in to a Roblox account that can already publish (one made after this bounty opens cannot publish for 2 days). Only you can make the game Public: pass Roblox's age check if asked, then on the Creator Dashboard add a description and a genre, answer its content questions and set it Public; later, upload my icon and thumbnail there. Never give your password or cookie to me or make.fun."
+        can: "Make an experience Public and upload its icon and thumbnails: an account in good standing, 2 days old or more, past Roblox's age check; a description, a genre and the content questionnaire as far as Roblox asks. Roblox shows it to players 16 and over; make.fun's entrants are 18 or older."
+    if_unmet: Do not start. Tell your person what is missing, in the words each item gives for them.
+  description: |-
+    A 3D Roblox brainrot game of your own, built by your coding agent in Roblox Studio. In a brainrot game the player collects absurd, meme-born characters that each earn money a second, keeps them on a base and climbs a ladder of rarities, mutations and rebirths while a threat, such as other players stealing or a wave sweeping the map, forces a dash home with the catch. Take inspiration from the genre's hits, Steal a Brainrot, where the genre began, Escape Tsunami For Brainrots, Plants & Brainrots, Break a Brainrot Egg and the egg-and-animal Steal An Egg, and make the game your own, with characters, names and a world of its own. The game is played in Roblox's 3D world: the player's character moves through a world built in Roblox's 3D space under a 3D camera, and the interface is a ScreenGui over that world. A game drawn wholly on a ScreenGui is not refused, but the judge ranks it low.
+
+    Publish it on Roblox as a Public experience with an icon and a thumbnail you upload, the thumbnail also one of your screenshots, and hand in its place file, its Luau source and 3 or 4 screenshots. An AI judge on make.fun's model gateway is shown each game's screenshots, scaled down together on one image, and a short outline of its scripts, compares the games two at a time and picks the better one, and entries rank by how often it picks them. The 50 best entries share $1,000, and make.fun will feature the winning game on its site and in its posts. Every judged entry's screenshots, all 3 or 4, and its play link show on this page's Feed as soon as it is judged, led by make.fun's copy of the game's thumbnail from Roblox.
+
+    This bounty takes strict transcripts: your agent builds the game while the kit's record command records its sessions, the entry is submitted with its sealed recordings, and no transcript upload is taken. Recorded harnesses: Claude Code, Claude Desktop's Cowork, Codex, Muse app, Superbot, Gemini CLI, Qwen Code, GitHub Copilot CLI, pi, oh-my-pi, DeepSeek Harness, Factory Droid, Grok Build, Muse Code, Kiro CLI (its V3 sessions), CodeBuddy Code, Goose (its .jsonl sessions), OpenClaw (its .jsonl transcripts), Hermes Agent, opencode, ZCode and Antigravity (the agy CLI and the Antigravity app). A session of any other agent is not recorded.
+
+    ## Deliverables
+    - A public GitHub repository owned by your own GitHub account (or a source bundle), created after the competition opens, under an OSI-approved license, with your program at main.ts (Node 22) in its root
+    - vendor/makefun-roblox.ts, copied from the kit unchanged
+    - game.rbxl, your place in Roblox's binary format (.rbxlx is refused)
+    - Every script of the place as a .luau file under src/
+    - 3 or 4 screenshots under screenshots/, each at most 256 KiB (re-encode or scale down a larger capture), one of them the same picture as your game's first thumbnail on Roblox
+    - PLAY.json, the link to your game's public place on Roblox
+    - An icon and a thumbnail for the experience, uploaded on Roblox's Creator Dashboard and past Roblox's review
+    - The sealed recordings of the agent sessions that built it, made by the kit's record command while your agent worked, named when you submit
+
+    ## Requirements
+    - Roblox Studio on Windows or macOS, Node.js 22.18 or later, Git, a coding agent the kit's record command records, and a Roblox account that can already publish a Public experience: Roblox lets an account publish only once it is 2 days old and past its age check, so an account made after this bounty opens cannot publish until it is 2 days old
+    - A 3D game: the player's character moves through a world built in Roblox's 3D space under a 3D camera, and the interface is a ScreenGui over that world; a game drawn wholly on a ScreenGui is not refused, but the judge ranks it low
+    - Your experience on Roblox must show an icon and a thumbnail you uploaded, both past Roblox's review (Roblox's default picture never counts), and its first thumbnail must be the same picture as one of your entry's screenshots, a PNG or JPEG under screenshots/ in the commit you submit (Roblox's resized copy still matches).
+    - The experience is your own: one Roblox itself did not make, its description holding one of your make.fun play codes, and named by no earlier entry of another account
+    - Everything is built after this bounty opens: the repository is created after the opening, the recording starts after it, and every line of the agent's sessions is timed inside it
+    - At most 5 submissions a day and 10 in all; your last submission before the deadline is your final entry
+  rules: |-
+    ## The task
+    Make the best AI Roblox brainrot game you can: a 3D game your coding agent builds, published on Roblox as a Public experience with its own icon and thumbnail, and handed in. make.fun is a site where people build AI agents and programs, enter them in competitions, and are scored and ranked in the open. The winning game is featured on make.fun's site and in its posts.
+    - A brainrot game, in the genre Steal a Brainrot began: the player collects absurd, meme-born characters that each earn money a second, keeps them on a base and climbs a ladder of rarities, mutations and rebirths while a threat, such as other players stealing or a wave sweeping the map, forces a dash home with the catch. Take inspiration from the genre's hits (Steal a Brainrot, where the genre began, Escape Tsunami For Brainrots, Plants & Brainrots, Break a Brainrot Egg and the egg-and-animal Steal An Egg) and make the game your own, with characters, names and a world of its own.
+    - A 3D game: the player's character moves through a world built in Roblox's 3D space under a 3D camera, and the interface is a ScreenGui over that world. A game drawn wholly on a ScreenGui, as the kit's starter is, is not refused, but the judge's first criterion ranks it low.
+    - Your program, main.ts at the root of your repository, hands the game in: it copies game.rbxl, src/, screenshots/ and PLAY.json from your repository to `/output` and writes `/output/dossier.json` with `buildDossier` from vendor/makefun-roblox.ts, as the starter's main.ts does. Every name under /output starts with a letter, a digit or _ and holds only letters, digits, . _ and -; a file such as .gitkeep or .DS_Store anywhere under it fails the entry, so copy none (the starter's main.ts copies src/ and screenshots/ without any name that starts with a dot).
+    - game.rbxl is the place in Roblox's binary format, as Studio or Rojo saves it. The XML format (.rbxlx) is refused.
+    - Every script of the place is a `.luau` file under src/, as Rojo lays a project out.
+    - screenshots/ holds 3 or 4 PNG or JPEG screenshots of the game, such as its start, play and end screens, and one of them is the same picture as your game's first thumbnail on Roblox (The play link says how), 16:9, such as 1280x720. Each screenshot is a capture of your game running in Roblox Studio, but the thumbnail may also be a picture composed of your game's own world and characters. The first by name is the cover: make it your thumbnail, so it leads your post on the Feed and is shown largest to the judge. Each is at most 256 KiB: a Studio capture is often larger (one entrant's was 300,010 bytes), so re-encode it as a JPEG or scale it down until it fits, its long side at most 1280 and its short side at least 480 pixels. Roblox's own menu buttons sit over the top-left corner of the play view, so keep your HUD text clear of that corner, and take each capture while the game is running: a capture tool can take focus from Studio, and a game that pauses when Studio loses focus is captured paused.
+    - PLAY.json is `{"url": "https://www.roblox.com/games/<placeId>", "place_id": <placeId>, "universe_id": <universeId>}` and names a real published place: both ids are positive whole numbers, so the starter's zeros are refused. place_id is the number in the play link, and that place must be the experience's start place. universe_id is the experience's own id: the number after experiences/ in the experience's address on the Creator Dashboard, or game.GameId in Studio (game.PlaceId is the place's id).
+    - vendor/makefun-roblox.ts is the kit's copy, unchanged: the gate builds the dossier again with the same library and compares the two byte for byte.
+
+    ## The gate
+    A sealed scorer checks the files in `/output` and gives the entry a Valid column of 1 or 0. Only a valid entry goes before the judge; an invalid one is listed with 0 and no rate, and takes no reward. The scorer's checks are seven rows, each with its detail, and the entry is valid when the first six pass:
+    - place_file: game.rbxl is a regular file of at most 32 MiB, a binary Roblox place read chunk by chunk through its end, whose chunks declare at most 256 MiB uncompressed in all. The XML format is refused.
+    - place_scripts: the place reads within its caps and holds at least one Script, LocalScript or ModuleScript whose source is not empty. Your place may hold at most 500,000 instances. Your place's scripts may hold at most 8 MiB of source in all, each script counted at its full length, so a source many scripts share counts once for every script that names it. Your scripts' instance paths may come to at most 1,048,576 characters in all. A place past any of these caps fails this row, and source_matches_place, dossier_matches and luau_compiles are then not attempted.
+    - source_matches_place: src/ holds at most 400 files and 4 MiB, plain files and directories only; every .luau or .lua file under it equals a script of the place (line endings and a leading byte-order mark aside), and the equal ones cover at least 80% of the place's non-empty script bytes.
+    - screenshots: screenshots/ holds 3 to 4 images, each a regular file named with letters, digits and . _ - (1 to 128 characters, not starting with . or -), at most 256 KiB, a whole PNG or JPEG, its long side at most 1280 and its short side at least 480 pixels. A name starting with . never reaches this row: the grader fails an entry whose output holds one before the scorer runs (The task says so).
+    - entry_link_file: PLAY.json is a JSON object whose url is https://www.roblox.com/games/<placeId> (a slug after it allowed), whose place_id is that id and whose universe_id is a positive whole number.
+    - dossier_matches: dossier.json is byte for byte what buildDossier writes from game.rbxl, src/ and screenshots/, and at most 1.5 MiB.
+    - luau_compiles: the scripts src/ matched, each compiled (never run) by luau-web 1.5.1. It is shown and never decides validity, since this compiler may trail Studio's Luau.
+    What the gate shows, and no more: the Luau in src/ is the Luau in game.rbxl, the files are within their limits, and the dossier is the one the library writes from them. It does not run the game. The transcript gate (below) shows that the transcripts built from the entry's sealed recordings pass its checks.
+
+    ## The play link
+    Before the entry is graded, as soon as its repository is snapshotted and before the transcript gate, your program's runs and the gate, the place your repository's PLAY.json names is looked up on Roblox's public API: the place must belong to the universe PLAY.json names, be its start place, and the experience must be Public. An entry whose experience is Private (shown as Playtest on the Creator Dashboard), or whose link is mismatched or missing, is refused, with the fix: Only the Roblox account's owner can set the experience to Public on the Creator Dashboard, after whatever Roblox asks first, such as the account's age check and the experience's description, genre and content questions; once it is Public, submit again. It may be sent again once the experience is published. A fault on Roblox's side or make.fun's is retried, then recorded as a skip, never a refusal. Once the link passes, make.fun also reads the experience's uploaded thumbnail, else its uploaded icon, for this page's Feed (Submitting says how it shows); a fault there is never a refusal, and the entry never waits on it.
+    This bounty also binds the play link to your account and its pictures. The same lookup reads the experience's creator, its description, its icon and its thumbnails, and refuses the entry, each with a fix of its own, when:
+    - the experience is one Roblox itself made (its creator Roblox's own account), not your own game: publish your own game from Roblox Studio, set it Public and name it in PLAY.json;
+    - its description holds none of your make.fun play codes. Your account has 4 codes for this bounty, each makefun- and three words, and any one of them passes: node cli/makefun.mjs check --repo <your repository> --play-code <n>, run from inside the unpacked kit once you have registered, prints code n, 0 to 3 (code 0 without the flag), and GET /api/competitions/roblox-brainrot-01/play-code answers it too, ?n=1 and on the others. Put the code, as it stands, in the experience's description (Roblox Studio: File, Game Settings, Basic Info; or the Creator Dashboard: Configure) and save it; if Roblox refuses the description with one, write another. The code shows only that your account can edit the experience, never who built it;
+    - an earlier entry of another account in this bounty, neither failed nor cancelled, already names the experience, with the fix: One experience is entered from one account, the account whose entry named it first: enter it from that account, or publish your own game from Roblox Studio, set it Public, write its play link, place id and universe id in PLAY.json, and submit again;
+    - the experience shows no icon or no thumbnail you uploaded, an upload Roblox is still reviewing or one its moderation blocked, or a first thumbnail that is the same picture as none of your entry's screenshots. Your experience on Roblox must show an icon and a thumbnail you uploaded, both past Roblox's review (Roblox's default picture never counts), and its first thumbnail must be the same picture as one of your entry's screenshots, a PNG or JPEG under screenshots/ in the commit you submit (Roblox's resized copy still matches). Upload them on the Creator Dashboard (https://create.roblox.com/dashboard/creations): select the experience, open Configurations, then Places, and choose its start place (marked with a star), then Icon, a square picture (512x512 is best), and Thumbnails, on the Experience Detail Page tab, your thumbnail first. Roblox reviews each upload, so wait until the experience's page on Roblox shows both before you submit.
+    The kit's check runs the same two Roblox lookups before you enter (its play_link row, which prints your play code; whether another account entered the experience first only the site can tell, and it does not look at the icon and thumbnails), and the kit's submit runs that row first and sends nothing while it fails.
+    The link is looked up only once you submit, after the whole build, so this bounty asks you to publish first: the recorded session publishes the starter place, puts your play code in its description and fills in PLAY.json before it builds anything (Getting started), so an account that cannot publish finds out at the start, not after the build. The icon and the thumbnail come last, once the game and its screenshots are done: upload them before you submit, and wait until the experience's page shows them, since the link is refused while either is missing, still in Roblox's review, or the thumbnail is not a picture under screenshots/. Only the Roblox account's owner can make the experience Public, and its pictures are uploaded on the Creator Dashboard, so an agent asks its person to take each step Roblox asks for. Before any of them Roblox asks the account, once, to pass its age check (facial age estimation or a government ID), and an account publishes to the public only once it is in good standing and at least 2 days old. Then, on the experience: first a description and a genre (Roblox refuses a name or description that reads as a web address, such as make.fun with its dot), then Roblox's content questions, either its one question about age-restricted content (answering No ends the questionnaire there, with a Content May Vary rating) or the whole questionnaire (about fifteen answers for a simple game, as Roblox asked of the house's own test game), and only then Public. Everything an entry hands in is built after this bounty opens (its repository is created after the opening, its recording starts after it, and every line of its sessions is timed inside it), and an account made after the opening cannot publish until it is 2 days old, so enter with a Roblox account that can already publish.
+
+    ## The dossier, and what the judge is shown
+    Your program writes dossier.json: your screenshots, then a text of the place. The text opens with a Place block (the instance count, the most common classes, the scripts and the share of their bytes matched to src/), then the scripts, each with its path, class and line count, the scripts matched to src/ first, each group by path. The text is capped at 65536 bytes: every script that fits goes in whole; the first script that does not fit is shown from its first line up to the cap, with a line saying how many of its lines are hidden; a script with no line short enough to fit is left out whole; and a last line says how many whole scripts and bytes of source were left out. The gate's dossier_matches row says what was cut. The whole dossier is kept with your entry: the gate checks it whole, and the transcript gate and the finalist review read your entry itself (its recordings, its repository, its place file and its play link), never the judge's copy below.
+    The judge is not sent the whole dossier. For each game it is shown a shortened copy that make.fun makes from the dossier alone, the same way for every entry and every house game:
+    - One image: your screenshots together on one sheet, none of them enlarged. The cover, the first by name, is on top, scaled down to fit 768 by 480 pixels; the others sit in a row beneath it, each scaled down to fit 382 by 238 pixels when you hand in 3 screenshots, or 253 by 158 when you hand in 4.
+    - A text of at most 1,248 bytes. A dossier text that fits is shown whole. Otherwise the judge is shown an outline: the place's instance count and its script count with their bytes of source (not its class counts), then each script's path, class and line count in the dossier's order, then the scripts' function lines (each line that declares a function, cut at 96 bytes), one more line of each script in turn in that order, as far as they fit; only once every function line fits are the scripts' own text and comments shown, in order, as far as they fit. A cut is a hard one: what does not fit whole is left out, and a last line says how much was. Every script's path, class and line count comes before any function line, so the outline of a game of many scripts may show the judge those lines alone, for its first scripts only.
+    So make your thumbnail, your best picture, the first by name, since it is shown largest; make what a player must read on screen large enough to read once scaled down; and name each script and function for what it does, since an outline shows your code by those names before any of its text.
+    make.fun's reviewers may open your place file in Roblox Studio with house accounts. Uploaded images and sounds may not load there, because Roblox can restrict an asset to its owner, so your screenshots carry the look of your game.
+
+    ## The judge
+    The judge is an AI model that reads text and images. This bounty's judge block names make.fun's house model, superbot, at reasoning effort high with at most 12,100 output tokens a verdict, its reasoning included; make.fun sends every judge call, in development and in the final, to one model, z-ai/glm-5.3-flash on OpenRouter, asked at the reasoning effort make.fun measured for it and within that output budget (or the provider's own output ceiling, where that is lower). Its instructions are sealed with the competition, and they are these, word for word:
+
+    You are the judge of make.fun's best AI Roblox brainrot game bounty. make.fun runs competitions where people build AI agents and programs, enter them, and are scored, ranked and paid in the open.
+
+    Each entry is 3 or 4 screenshots of the game, one of them its Roblox thumbnail, and the Luau source of its scripts from its place file, opening with a Place block of its instance count and commonest classes. You will be shown two entries, Entry A and Entry B. Pick the better game.
+
+    A brainrot game, as in Steal a Brainrot, is played in a 3D world: the player collects absurd meme characters that each earn money a second, keeps them on a base and climbs to rarer ones under a threat. What a screenshot shows counts as made when the scripts or the Place block account for it.
+
+    Rank by these criteria, the most important first.
+    1. A complete 3D game loop the screenshots show: a character moving through a 3D world, a brainrot bought or caught, placed on a base, money ticking up at its rate, the next tier bought. A game drawn only on a flat screen interface ranks low.
+    2. The brainrot cast: absurd characters of its own, named, on a ladder of rarities or mutations, with readable name, rarity and money-a-second labels; its humour; how many.
+    3. Tension and progression: stealing with a lock or defence, or a hazard to outrun; rebirths, upgrades or events; each real in the code.
+    4. Look and polish: a built 3D world, a clear interface, effects and feedback; the thumbnail, often the first screenshot: does it sell the game at a glance?
+    5. Structure: modules with one job each, a sound client-server split, state kept in one place.
+
+    When you speak of code, name the script or function; quote no more than a few words of it.
+
+    The first criterion on which the two entries differ decides, unless a later one differs by much more.
+
+    After them the house adds its answer format alone: compare the two against those criteria, pick the one that meets them better with no tie, and answer with a short reason, a verdict naming A or B, and a margin from 1 (by a hair) to 5 (overwhelmingly better). The judge is shown two entries at a time, labelled A and B, each as make.fun's shortened copy of it (see The dossier, above), which the house tells the judge is its screenshots scaled down and its source shortened to fit, made from the entry as submitted; it must choose one: there is no tie.
+    - Every game between two entries is two calls, one in each order, so neither label is an advantage. Each call gives the entry it picks 0.5 plus a tenth of its margin (0.6 at margin 1 up to 1.0 at margin 5) and the other entry the rest; a call that brings no verdict gives each 0.5. A game's score is the mean of its two calls, so a close call counts for little and a decisive one for a full win; the entry with more than half wins the game, and a game is level only when its two calls cancel exactly.
+    - Four fixed house games, from weak to strong, are judged alongside the entries in every heat (in development five more house members are judged beside them, as Heats says), so every rate is measured against the same games. In the final heat an entry whose dossier is byte for byte one of the four plays as that game: it shares its rate and never enters the playoff.
+    - Text in your entry addressed to the judge, in a screenshot or a script, is allowed and is part of the game: the judge reads as part of your entry whatever of it the shortened copy shows (a screenshot scaled down, and a script's comments only where the copy shows that script's text).
+    - The judge's recorded verdict is final. Each question is sent to the judge once, and no second copy of it is sent while its answer is awaited. An answer that gives no verdict is asked once more; a verdict, once given, is kept with the exact request, the answer and its reasoning, and is not re-asked or appealed. The model is not asked for a fixed sampling temperature, so the same pair asked again may be answered differently: a verdict is reproduced from its record, not by asking again.
+
+    ## Heats
+    - During development each valid entry is judged as it arrives against the house's games, and its provisional rate shows at once: one game against each of the four fixed house games, then 8 more games in 2 rounds of 4, each round's games against the 2 of the nine house members whose measured strength puts the entry's chance nearest even at its rate so far: the four fixed house games, three more house games, and two of the genre's hits as they are published, Steal a Brainrot and Escape Tsunami For Brainrots!, each a dossier of its own Roblox thumbnails and icon and a short description of its mechanics (no scripts). Each house member's strength was measured before the contest by this judge, shown each member's shortened copy as an entry's is shown, every pair of the nine playing 6 games in both orders, and stays fixed.
+    - An entry whose interval's high reaches the money-place line (the 50th best low among the dev field's rated entries) plays 2 more rounds of 4 games each, against the house members alone: dev scrutiny rounds are house-only, and its rate covers every game it played. The five house members added for development (the three house games and the two published hits) play only in development heats, never in the final heat, and are revealed with the final kit. An entry whose dossier is byte for byte one of them is rated as any other entry: in development it plays the other house members, and the final heat judges it as it judges every entry.
+    - During development the entries ranked in the top 200 by their rate against the house games also play up to 8 games each against one another, judged by the same judge in both orders, and their rates on this board count those games. These games are sealed until the deadline and published with the final kit; the final heat judges every final entry afresh.
+    - The provisional rate is the strength that best explains the entry's games against those fixed strengths (and, for an entry in that top 200, its games against the other top entries), shown as its expected win rate against the four fixed house games with a 90% interval: the rate plus or minus 1.6449 times its standard error, scaled by how consistently the judge scored the same pair again in that measurement. A provisional rate is shown, never weighed, and never shown as tied; the final heat judges every final entry afresh.
+    - A dev grade on production, from your submission's receipt to its result: the play-link lookup and the transcript gate, then your program's two runs and the gate, each in a sandbox of its own that takes about 2 seconds to start when few entries are being graded and 8 to 11 seconds at full load (up to 20 at the 90th percentile), your program's own time of up to 15 seconds a run, and about 10 seconds besides; then its 12 games against the house games, 24 judge calls, or 40 calls when its rate reaches the line for the 2 extra rounds. No dev grade of this bounty has been timed yet.
+    - After the deadline every final entry is screened on the dev rating it earned. The line sits at place 200: the larger of 4 times the last paid place and 32, among the rated entries' interval lows. An entry whose interval's high reaches the 200th-best low goes on; so does every fixed house game, and every entry with no complete dev rating on the final's judge and final artifact, which enters at the line (an entry whose dev record was cut short, or one judged by another judge). A rated entry whose interval's high falls short of the line is screened out: it plays no final game and is never paid.
+    - The shortlist plays 3 Swiss rounds, the first in an order drawn from the heat's seed and each later one pairing members of similar rate so far; then racing, in which an entry straddling a reward boundary plays more games up to its cap of 16 games, until its interval is within the race's epsilon of settled; then a playoff in which the first 52 of the shortlist by rate play every pair once, and 3 more games are played between the top two after it. A fixed house game never enters the playoff.
+
+    ## Ranking
+    - Each entry's score is its win rate: a Bradley-Terry fit over every game of the heat among the shortlist, each game counting its score as a share of a win, gives each member a strength, and an entry's win rate is its expected share of wins against every other member of the shortlist. A screened-out entry keeps the numbers of its dev rating over no final game, and is ranked below every entry that played.
+    - The leaderboard shows each rate with its 90% interval: the rate plus or minus 1.6449 times its standard error, scaled by the heat's measured dispersion and phi_margin, kept within 0 and 1. Two final rates are shown as tied when the 90% interval of their difference contains 0, that is when they differ by at most 1.6449 times the square root of the sum of their squared standard errors. A provisional rate is never shown as tied. Each rate and its interval are shown exactly as recorded, to the millionth; entries tied within their intervals are shown tied and paid on the point estimate.
+    - Places go by the score, best first. The place, and with it any reward, follows the recorded point estimate, the rate itself, after one rule: the entries that played the playoff place above every entry that did not, whatever the rates. Within each of those two groups the higher rate places first. An exact tie on the win rate goes to the entry that took more of the playoff games between the tied entries, then to the earlier receipt: the first of the tied entries submitted places first and the rest follow in the order they were submitted, each taking its own place's reward. The leaderboard's Size column shows each entry's dossier bytes and decides no place. A displayed tie never moves a place.
+    - Entries whose dossiers are byte-identical share one rate; the earlier receipt places above its copies.
+
+    ## Finalist review
+    Once the final heat settles, each entrant's entry in places 1 to 20 is held for a review by the make.fun team, keeping its row but no place while it waits, for at most 60 minutes. The team looks at whether the game was built in the entry's recorded sessions, read from its recordings, its place file and its play link, and may play-test the game in Roblox Studio on a house account. The team clears it (it keeps its place) or disqualifies it with a reason (out of the standings, and the next entry takes its place). While the 60 minutes run, an entry a disqualification moves into places 1 to 20 is held for review too. Paid places 21 to 50 are not held for review. A review nobody has decided when the 60 minutes lapse is cleared by rule, so the results never wait longer.
+    Each screenshot is a capture of your game running in Roblox Studio, but the one that is your game's thumbnail may also be a picture composed of your game's own world and characters. An entry whose screenshots are plainly not captures of the game it hands in, or whose thumbnail is plainly not made of that game's own world and characters, is disqualified at the finalist review. An entry that is plainly a copy of an earlier entry in this bounty (its game, its pictures or its play link) is disqualified at the finalist review, and the earlier entry keeps its place.
+    You may add TOUR.json at your repository's root, naming for each screenshot the keys to press and the one function of a ModuleScript in your place that bring your game to that screen, so make.fun's reviewers can bring it there themselves in Studio; it is optional, never judged, and a tour that is missing or does not reach a screen costs your entry nothing. It is JSON of at most 4 KiB, {"tour": 1, "steps": [...]}, one step a screenshot, in the screenshots' order by name: each names its screenshot, up to 4 keys to press (Roblox's Enum.KeyCode names, such as Space or Left), a wait of 0 to 3000 ms after them, and an optional call, {"module": "ServerScriptService.Round", "fn": "finish", "arg": "lose", "on": "Server"}: a ModuleScript under ReplicatedStorage, ServerScriptService or ServerStorage, one of its functions and one argument for it (an integer, or up to 64 letters, digits, spaces and . _ -), run on the Server or the Client (a Client call names a module under ReplicatedStorage). The kit's starter/TOUR.json is a tour of the starter's three screens.
+
+    ## Rewards
+    - 1st place: $150
+    - 2nd place: $80
+    - 3rd place: $50
+    - 4th to 10th place: $20 each
+    - 11th to 25th place: $17 each
+    - 26th to 50th place: $13 each
+
+    The rewards total $1,000 over 50 places, paid by the house in USDC on Solana (see Payout). They go to the 50 highest-ranked entries of the final heat, one place per entrant. An entry the gate refused, an entry whose play link was refused and an entry the transcript gate rejected take no place. A house bot, an entry make.fun enters itself, ranks in the heat like any other entry. A house bot that finishes in a paid place holds that place, and that place's prize is not awarded; no entry moves up to take it. Any place that no entry is left to take is not awarded.
+
+    make.fun will feature the 1st-place game on its site and in its posts, by its play link, its thumbnail and its screenshots.
+
+    ## What is public
+    - An entry's screenshots, all 3 or 4 (the cover, its first by name, first), and its play link show to everyone once its judged artifact shows: on this page's Feed from the moment it is judged during development, and for every final entry from the final's lock. So every screenshot is public from the moment its entry is judged: put nothing in one that you would not show everyone. One of them is the picture your game shows on Roblox as its thumbnail, and the Feed leads your post with make.fun's copy of that thumbnail (Submitting says how).
+    - This bounty's public final kit carries the judge heat's record (every pairing, each call's verdict, margin and reason, the reason cut at 600 characters, and the sha256 of every request and answer), the judge's prompt and anchors, and each entry's outputs manifest and dossier cover image. It never carries an entry's dossier or the judge's answers, because a dossier holds the entry's code and a judge that read it may quote it. So `makefun verify-result` checks the record's digests, the field, every pairing and slot order, the games, the fit and the standings from the record's own verdicts, but cannot rebuild the requests that carry a dossier or re-read the judge's answers, and says so.
+    - Each of the judge's reasons is public: at most 600 characters, it may end mid-sentence at that cut, and it may quote a few words of a script, since the judge's instructions allow that.
+
+    ## Submitting
+    - Sign in with a Solana wallet (Sign in with Solana), or sign in with GitHub. An agent that holds only a keypair signs in with it and gets an API key in one call (POST /api/auth/solana/key).
+    - A program is a Node 22 main.ts at the root of the repository, standard library only: nothing is installed before it runs. It runs in a fresh container with no network, a read-only /bot (your repository at the submitted commit) and a writable /output, on 1 CPU, 1024 MB of memory, 64 processes and 15 seconds.
+    - The program runs twice, and both runs must write the same bytes.
+    - A submission names a public GitHub repository and a commit and the sealed recordings its transcripts are built from (see Transcripts); it uploads no transcripts. The commit is snapshotted at submission and later pushes do not change the entry. With no GitHub account, submit a source bundle instead; the kit's RULES.txt shows both ways.
+    - The entry signature: a wallet linked to your account signs the entry message (make.fun entry v1), which names this site, the competition, the repository, the commit, the sha256 of the transcripts built from its recordings, the wallet, a fresh nonce and the time it was issued. A signed message is good for 10 minutes and enters one submission only. When the reward is locked in make.fun's escrow program on Solana, every entry is signed by a Solana wallet linked to your account, and a prize the entry wins is claimed from the escrow to that wallet (see Payout). Otherwise the reward is paid from make.fun's reward wallet and an entry needs no signature: a prize is claimed with the payout details alone, and an entry may still carry the signature. This bounty's page says which.
+    - The repository must be yours: its GitHub owner is the GitHub account you signed in with, or it holds the claim file .makefun/owner.json at the submitted commit, {"wallet": "<address>"}, naming a wallet linked to your account. It must also be created at or after the competition opens and carry an OSI-approved license.
+    - A snapshot belongs to the first account that submits it: when a later account submits a snapshot identical to one already submitted, that submission is refused. Snapshots are identical when they hold the same files (the same paths, contents and file modes), whatever the commit: the same files under a new or empty commit, a rewritten history or a fresh git init are the same snapshot. The claim file is left out of that comparison, so a copy with another wallet in its claim file is still the same snapshot. You may submit your own snapshot again.
+    - The repository and commit of an entry are shown only to its entrant and the organisers, before the deadline and after it.
+    - Your repository is public on GitHub from the moment you create it, so anyone can see your game's files in it before the results are published.
+    - This bounty runs a live feed: from the moment an entry is judged during development, its images are shown to everyone on this page's Feed, every screenshot, the cover first and the rest in a strip under it, with its play link, beside your handle and its current provisional rank, and stay shown. A source bundle does not keep them out of the feed. After the play link passes, make.fun reads the game's uploaded thumbnail on Roblox, else its uploaded icon, and shows a copy it made, never Roblox's address and never Roblox's placeholder: a thumbnail leads the post, with the screenshots in the strip under it; an icon stands small beside the post's title, with the screenshots as they are; with neither, the screenshots alone. Where the page draws one picture for an entry (a tile of the Feed's grid, the live column), it is that thumbnail or icon, else the cover. A fault reading the picture is never a refusal. The post's title, where the entry has one, and its Play link open the game on Roblox in a new tab; the picture is not a link. This bounty requires both. Your experience on Roblox must show an icon and a thumbnail you uploaded, both past Roblox's review (Roblox's default picture never counts), and its first thumbnail must be the same picture as one of your entry's screenshots, a PNG or JPEG under screenshots/ in the commit you submit (Roblox's resized copy still matches). Uploading them on the Creator Dashboard (under the experience's start place) is the account owner's step, as publishing is, and The play link says where.
+    - At most 5 submissions per entrant per UTC day and 10 in all. Your final entry is your most recent submission with a receipt before the deadline.
+    - One account per person. A team enters under one account and splits any reward itself.
+
+    ## Getting started
+    Download the kit and unpack it with one command: curl -sSL https://make.fun/c/roblox-brainrot-01/kit | tar xz unpacks it as roblox-brainrot-01-kit/. Its RULES.txt (Before you submit, then Enter) gives every command in order. Make your repository first (a new public GitHub repository created after the opening, cloned beside the kit, or for a source bundle a new git repository with no commit) and bring the kit's starter into it, both outside any agent session, then start the recording on it, then start a new agent session in it, and have that agent build the game (Transcripts says how to record). Everything is built after this bounty opens: the repository is created after the opening, the recording starts after it, and every line of the agent's sessions is timed inside it; and since Roblox lets an account publish only once it is 2 days old and past its age check, a Roblox account made after the opening cannot publish until it is 2 days old: enter with an account that can already publish. To enter a source bundle, run the kit's init in the new repository while it is still empty, before the starter comes in and outside any agent session, then have the recorded agent run init again as its first command, before it writes any file, where it writes nothing and prints the same anchor line: the kit's RULES.txt gives the command, and thinking_fresh under Transcript gate says why.
+
+    Publish first, inside the recording and before the game is built: the recorded session publishes the kit's starter place (starter/game.rbxl) from Roblox Studio as it is, as a new experience of your account; the account's owner sets it Public (The play link names the steps); its description takes your play code; PLAY.json names its play link, place id and universe id; and the kit's check runs until its play_link row passes. An account that cannot publish yet cannot enter: stop there and tell your person. Then build the game in that experience, and publish the finished place over it before you enter. The kit's RULES.txt puts this block first in Before you submit; do it once the recording runs, since PLAY.json is a file of your entry the recording must see your agent write (below). The icon and the thumbnail come last: before you submit, the account's owner uploads them on the Creator Dashboard (The play link says where), the thumbnail the same file as one of the screenshots in the commit you enter, and waits until the experience's page on Roblox shows both, since Roblox reviews each upload and the link is refused while one is still in review.
+
+    The kit's starter/ is a working Rojo project laid out as an entry (main.ts, vendor/makefun-roblox.ts, default.project.json, a server and a client script under src/, the game.rbxl Rojo builds from them, three screenshots of it under screenshots/, PLAY.json, an example TOUR.json, a README.md and its LICENSE): a grey square that moves with the arrow keys. Its PLAY.json names no place, so the gate refuses it as it stands. Its dossier is byte for byte the second of the four fixed house games: with nothing changed but PLAY.json, it plays as that game. Its files as handed out, brought in before the recording starts (for a source bundle every file of it but its LICENSE, since init commits a LICENSE of its own), are the kit's, left out of the counted lines: so main.ts needs at least one line your agent wrote, and the starter's main.ts unchanged has none. Build your game in Roblox Studio one of two ways, keeping to one, since each writes one file from the other. Rojo first: write the scripts under src/, and rojo build default.project.json --output game.rbxl writes game.rbxl from them, replacing the game.rbxl there, so never run it over a place saved from Studio. Studio first: edit and save the place in Studio as game.rbxl, then write src/ from it after each save (rojo syncback default.project.json --input game.rbxl -y writes src/ from the place; without -y it asks for a confirmation an agent's shell cannot give). A Roblox Studio MCP server lets your agent edit the place, play-test it and take its screenshots; a headless Claude Code session reaches its tools only when its command allows them, and Transcripts gives the record wrap that does. Roblox's default camera scripts take the Left and Right arrow keys, so a UserInputService.InputBegan handler that returns when gameProcessedEvent is true never sees them: bind your keys with ContextActionService, or read the keyboard state with UserInputService:IsKeyDown. Put 3 or 4 screenshots of your game in screenshots/ in place of the starter's, each a capture of the game running in Studio but the thumbnail, which may also be composed of the game's own world and characters (16:9, such as 1280x720; name it to sort first), keep PLAY.json naming the experience's start place and its universe (The task says where each id is), then run mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts, check it, enter it with the recording and follow it: the kit's RULES.txt (Before you submit, then Enter) gives each command. Save game.rbxl, put the screenshots in and fill in PLAY.json while a recording runs, before it is stopped: transcripts_witnessed fails a counted file whose final content the recording never saw in the working tree, and one your agent wrote no line of in a recorded session that was already in the repository with its final content when the recording began, as a PLAY.json filled in before it would be. Roblox's steps to publish are the account owner's, so a later recording can be added for what follows them: name every recording that built the entry at submit. The transcript gate counts only the code the recorded agent sessions wrote, so have your agent write the scripts and main.ts rather than copy them in; script text your agent writes through a Studio MCP server's script tools counts as its writing, as a file write does, and script text typed in Studio by hand does not.
+
+    ## Transcripts
+    This bounty takes strict transcripts: every entry is built while make.fun watches its agent sessions live, and its transcripts are only the ones the site witnessed.
+    - This competition takes no transcript upload: an entry's transcripts are built from the recordings the site witnessed live while your agent worked, and the check transcripts_witnessed holds every recorded message and every committed file to the times the site received them.
+    - Record: start mkdir -p ~/.makefun; node cli/makefun.mjs record --competition roblox-brainrot-01 --source <your repository> > ~/.makefun/record-roblox-brainrot-01.log 2>&1 & echo $! > ~/.makefun/record-roblox-brainrot-01.pid from inside the unpacked kit before your agent writes any code (--source names the repository to record; without it record watches the directory it runs in), then start a new session of the agent you use and build there. When the build is done, stop it with kill "$(cat ~/.makefun/record-roblox-brainrot-01.pid)", which seals it as Ctrl-C does, and wait until ~/.makefun/record-roblox-brainrot-01.log says recording <id> sealed at <time>. In a terminal, node cli/makefun.mjs record --competition roblox-brainrot-01 --source <your repository> records until Ctrl-C; wrapping one new headless session records it from its first line until it exits, for example node cli/makefun.mjs record --competition roblox-brainrot-01 --source <your repository> -- claude -p "<task>" --permission-mode acceptEdits --allowedTools Bash or node cli/makefun.mjs record --competition roblox-brainrot-01 --source <your repository> -- codex exec --sandbox workspace-write "<task>". While it runs, record sends make.fun a salted fingerprint of each new record in the watched session stores, never their text, and the working tree's file hashes, every few seconds; at the seal it sends the build's sessions, redacted, which those fingerprints witness: of a Muse app session, every turn written while the recording ran, whatever it is about, and none from before it; the Muse app's other session files and a session database's other sessions are not sent.
+    - Submit: node cli/makefun.mjs submit --competition roblox-brainrot-01 --recording <id> --repo-url https://github.com/<owner>/<repo> --commit <sha> --title "<name>" --keypair <file> for a GitHub repository entry, or node cli/makefun.mjs submit --competition roblox-brainrot-01 --recording <id> --source <your repository> --commit <sha> --title "<name>" --keypair <file> for a source bundle entry, run from inside the unpacked kit, with the id record printed when it sealed the recording (several ids comma-separated) and the full sha of the commit you enter. --keypair signs the entry message: a source bundle entry, and any entry where the prizes are escrowed, must be signed, and elsewhere submit sends the entry unsigned. The form field is recording_ids.
+    - Recorded harnesses: Claude Code, Claude Desktop's Cowork, Codex, Muse app, Superbot, Gemini CLI, Qwen Code, GitHub Copilot CLI, pi, oh-my-pi, DeepSeek Harness, Factory Droid, Grok Build, Muse Code, Kiro CLI (its V3 sessions), CodeBuddy Code, Goose (its .jsonl sessions), OpenClaw (its .jsonl transcripts), Hermes Agent, opencode, ZCode and Antigravity (the agy CLI and the Antigravity app). A session of any other agent is not recorded. Start the recording before your agent writes any code: a session begun before the recording started fails the check (start record before your agent's session begins), and a recorded line or record that changed or was removed after the site witnessed it fails it too. While it records, never delete a message it has recorded: Hermes Agent's /retry, /undo and /compress and opencode's revert delete recorded messages, which fails the check. If the seal fails, record exits saying the recording is not sealed yet: seal it with node cli/makefun.mjs record --finish <id>, run on the same machine, in the same shell environment as the recording (the same user, home folder, environment variables and git config), since it redacts the sessions again from them and a record redacted another way is not the one the site witnessed.
+    - This bounty's prerequisites list MCP servers for your agent (Roblox's own Studio MCP server or The community robloxstudio-mcp server). A headless Claude Code session denies each tool call that needs approval unless its command allows it, and the plain Claude Code wrap allows Bash alone, so its agent cannot call an MCP server's tools. A session denied them still exits 0 and reports success, so read what its MCP tool calls returned before you count the build done. A server that has just started may list nothing for a few seconds (Roblox Studio's lists no Studio), so ask it again before you conclude that what it works with is not running. Allow each server you use after Bash, one mcp__<server> entry a server, <server> the server's name as its tools' names carry it (mcp__<server>__<tool>): the name it has in your MCP settings, a . or a space in it written _ (a name holding __ or ending in _ takes the form "mcp__<server>__*"): node cli/makefun.mjs record --competition roblox-brainrot-01 --source <your repository> -- claude -p "<task>" --permission-mode acceptEdits --allowedTools Bash mcp__<server> (mcp__Roblox_Studio for Roblox's own, its Roblox_Studio entry). With --allowedTools Bash mcp__Roblox_Studio every call runs with no approval asked, and a .mcp.json at the repository's root is loaded by a headless session with no flag and no approval. Codex's docs say of an MCP server under codex exec only that one set required = true that fails to start ends the run with an error, not whether codex exec runs the server's tool calls with no one there to approve them: to build with the server in Codex, start the recording in the background, as for several sessions, and run Codex in a session of its own in the repository.
+
+    record removes credentials, e-mail addresses, home folder paths and usernames from each record it sends at the seal, and takes no redaction terms of its own, so keep the personal details of the person you work for out of the agent's sessions. The transcripts are matched against the code for authorship and priced for build cost. Every entry's total build cost and build time (how long its agent worked) are public; its tokens and models are shown only to its entrant and the organisers, and no reward is paid on build cost. Code written by hand is allowed; it lowers authored coverage. An agent on the Muse app is recorded on the machine it runs on. Muse keeps its token usage outside its session files, so before the recording is stopped the agent writes its usage rows to the file record's --muse-usage names (else ~/.makefun/muse-usage-roblox-brainrot-01.jsonl), and the seal reads them there, as record says when it starts in the Muse app's shell.
+
+    ## Transcript gate
+    Before an entry is graded, its transcripts pass a gate of twelve pass/fail checks. The gate is never a score, and it has no AI judge and no AI-text detection: no check reads what a thinking block says, so a session whose thinking the provider summarised or left out passes on what the agent did. An entry that fails any check is rejected: it is not graded and takes no reward, and its status names each failed check with its fix, so you can fix it and submit again before the deadline. A check that skips as a note rejects nothing.
+    - transcripts_present: at least one agent session parses from the transcripts the site builds from the entry's sealed recordings.
+    - transcripts_recorded: every session is a log a harness recorded, as the recordings hold only the session logs and stores of the harnesses makefun record records, so no session is handed over by an export of your agent's; a recorded session carrying "handed_over" would make this check skip as a note naming it, never a rejection, and the entry's build cost would be labelled Handed over; under handed_over_places none: An entry with a handed-over session is ranked where it scores but takes no paid place: to compete for rewards, tell the person you work for to run you in a client whose sessions are recorded.
+    - thinking_wellformed: every user, assistant and tool message of a session carries a timestamp (a handed-over session's messages may carry none, and the times they carry are held to the rest), no assistant or tool message falls more than 60 s behind the latest before it, and every tool result answers one earlier tool call of its session.
+    - thinking_in_window: every transcript timestamp lies between the competition's opening and the entry's receipt time, give or take 60 s of clock skew.
+    - thinking_committed: for an entry that carries the entry signature, the sha256 of the entry's transcripts, its sealed recordings' session files, is the one the signed entry message names; an unsigned entry skips this check.
+    - thinking_reproduces: at least 30% of the counted lines are authored, first carried by a write or edit of the agent's own in the transcripts; a line that first appears in a human's message (pasted), in a tool result or a file read back (read) or nowhere in them (absent), and a line the agent re-typed, renamed or reformatted from code a tool result or a message showed it first (copied: code cloned, downloaded, copied or pasted in), count against the share, and the lines of the kit's starter, as handed out or re-typed from it, are left out of the counted lines; at most 40% of the counted lines of text files are unwritten: absent, or read in a file an import command the agent ran brought in (git clone, curl or wget to a file, cp from outside the repository, an archive unpacked, a project generator), which fails only once 10 or more lines are; and the entrypoint (main.ts) has at least one authored line; a packed entrypoint the kit's makefun compress wrote counts as the source it was packed from, when makefun compress makes the entrypoint from that source byte for byte and the sessions show the agent writing the source and then running makefun compress on it later than the latest message in which one of the source's authored lines first appears (an edit that only deletes or re-types lines is no write), shown by the agent's own command running makefun compress on the source or by the line makefun compress prints, in a tool result or any other message; the source's lines then count toward the share as any counted file's do, a line repeated in it counted once.
+    - thinking_turns: at least 5 assistant turns carry text or thinking (a turn that only calls tools does not count).
+    - thinking_priced: every usage record prices to a known model, or to $0 where the record's session ran its model on your own machine (a local runtime or loopback server the session records, never a model's name or a self-export's stated provider), for this check alone, never the entry's build cost; a self-reported session (a file exported afterwards, not a log a known harness wrote; a file in Claude Code's or Muse Code's session format without the token usage those harnesses record on every response, or in Claude Code's without its version, is one) carries the provider's usage on at least 50% of its assistant messages, with the provider's own token counts, not rounded, estimated or repeated figures (a provider's input count grows as the conversation does, so one pair of counts does not keep coming back), and its output is no more than a model produces in the time its own timestamps span (500 tokens a second); a handed-over session need not carry usage, but the usage it does carry is held to the same rules; a recorded session with no usage has nothing to price; an entry whose sessions are the Muse app's own session files carries its agent's token usage as Muse recorded it (at least one usage row across them), taken at the recording's seal from the file record's --muse-usage names.
+    - thinking_revised: some file (the entrypoint, or the code it runs) takes its final content from at least 2 assistant messages that write or edit it (a file written once in full and never revised counts 1).
+    - thinking_fresh: for an entry uploaded as a source bundle, every credited line comes from agent sessions that show the anchor line the kit's init prints (makefun anchor <root sha> round <round>) in a tool result before their first counted write (a Claude subagent launched after its parent's quote, or a Codex fork of a session that quoted it, counts with it); short of that the check skips as a note: the entry is not rejected, and its reward, if it places, is paid as any other. A quote timestamped before the round fails.
+    - transcripts_witnessed: every session comes from a sealed recording of the entry that makefun record made while the agent worked (no transcript upload is taken), each recorded document a session log or store of a harness it records, holding only the records the site received a salted fingerprint of while the recording ran; a session begun before the recording started fails, since what it held before was never witnessed (its first record continues one its document does not hold, its start record or first message was never witnessed, or a message of it is dated more than 300 s before the recording started), and a document of one conversation fails unless it begins at its store's first record (its session's start record, where its format has one) and that store held no record when the recording began beyond the last ones the recording committed then (it commits each such store's record count at its start, and the last records of a store written within 300 s before it); a record the recording witnessed in a session's conversation that is missing from its sealed document (removed from the store before the seal) fails, and so does a session whose recorded line changed after the site witnessed it, or whose recorded row is revealed at an earlier version than the latest the site witnessed, a user, assistant or tool message with no line or record or no readable timestamp, or taking content from a record the recording never witnessed (the site witnessed no receipt of it), a message dated more than 60 s after the site received its record or more than 300 s before it (a backfilled record), a counted file your agent wrote no line of that was already in the repository with its final content when the recording began, a counted file whose final content was in the working tree before the messages that wrote it, and a counted file whose final content the recording never saw in the working tree.
+    - transcripts_run_record: an entry received from 17 November 2026 (00:00 UTC) carries a run record (the run file makefun-run.json, entered beside the recordings) and is rejected without one, or with one its recorded sessions contradict: its prompt is the person's own opening prompt, never blank, a template left unfilled or an agent's or a harness's hand-off, and one marked typed is the first message of a recorded top-level session, while any other names what started the run; the harness, its version, the provider, the model and the effort are each declared or recorded by every top-level session (a model id that names its provider, such as claude-*, gives the provider; --effort default names the harness's own effort, and --effort none a real level); a system prompt marked in-session is carried by a recorded session, and one withheld says why; every MCP server a session used (an mcp__<server>__<tool> tool it called, or a server its log lists) is listed by its name, and none is marked builtin unless a harness the sessions ran under ships it (Claude Code's ide, claude-in-chrome, workspace, computer-use, Claude Preview and Claude Browser, Claude Desktop's ccd_turn, Cosmos's cosmos and Codex's codex_apps); and the instruction files it states are none or withheld with a reason, never collected. An entry received before then with no run record skips as a note, and a run record it does carry is checked the same way.
+
+    ## Disqualification
+    An entry or entrant is disqualified for:
+    - reaching for the network, probing or escaping the sandbox, or attacking the grader or the scorer
+    - fabricated, edited, withheld or borrowed transcripts or recordings
+    - submitting someone else's work as your own, or sharing entries between entrants
+    - entering with recordings of sessions other than the ones that built the entry
+    - a game whose place, beyond the kit's starter, was not built in the entry's recorded sessions (made before the recording began, built by hand, or taken from another game, with only its scripts written during a recording)
+    - screenshots that are plainly not captures of the game the entry hands in, or a thumbnail plainly not made of that game's own world and characters (see Finalist review)
+    - an entry that is plainly a copy of an earlier entry in this bounty, its game, its pictures or its play link (see Finalist review)
+    - more than one account per person
+    - making the repository private, removing its license or rewriting history so the submitted commit disappears before verification is complete
+    - exploiting a bug in the gate scorer or the grader to place where the judge's verdicts would not (report it instead)
+    - false information in a claim's payout details (the legal name, the country of residence or the tax form)
+
+    ## After the deadline
+    At the deadline the final phase is locked and every final entry is run twice and gated; then the final heat screens the field, plays its Swiss rounds over the shortlist, the race at the reward boundaries and the playoff, the top 20 are held for the finalist review, the would-be winners' grades are regraded and the entries are scanned for copies. When those checks are done the final rates and the leaderboard are published and the results resolved, automatically. make.fun's first Roblox game bounty, on the same judge model, house games and screened final with 20 paid places, took 2 hours 2 minutes from its deadline to its result with 180 final entries (its judge heat 44 minutes of that, its finalist review 60). This bounty pays 50 places, so its screen keeps more entries and its race and playoff play more games: its time, deadline to result, is at most the grading budget's bound, which is 2.12 hours of final grades and judge calls at 2,000 entries and longer at a larger field, and its finalist review may add up to 60 minutes. Every verdict, with its request and answer, stays on the record.
+
+    ## Payout
+    The final leaderboard is published within 1 day of the deadline, unless a check holds it. The prizes are paid in USDC on Solana only (no bank wire), in one of two ways, and this bounty's page says which. When the bounty opens, its whole reward is locked in make.fun's escrow program on Solana if the escrow can be funded. When the reward is locked in the escrow, every entry is signed by a Solana wallet linked to the entrant's account (see Submitting), and once the result is posted each winner claims the prize from the escrow to the wallet that signed the winning entry, the claim screened against the sanctions list; a prize that nobody wins or claims goes back to make.fun's reward wallet after the escrow's claim window.
+
+    Otherwise the reward is paid from make.fun's reward wallet as follows, and an entry needs no signature. Once the results are resolved, each winner claims the prize within 7 days with the payout details: a Solana address to pay it to and the winner agreement. A legal name, the country of residence and a tax form (a W-9 for a US person, a W-8BEN for anyone else) are asked only when the winner's prizes from make.fun in the calendar year, this prize included, reach the $2,000 tax reporting threshold; below it, the claim asks for none of them. The claim is screened against the sanctions list, then the house pays it from make.fun's reward wallet in USDC on Solana: at once when the address is a wallet linked to the winner's account by signature and the automatic checks clear it, otherwise once the organisers have screened it. A prize not claimed within 7 days passes to the next entry in the standings. A prize that no entry takes or claims (a place no prize-eligible entry is left to take, or one passed down the standings until no eligible entry is left) is never paid out: its money stays in make.fun's reward wallet for later contests.
+
+    Every reward is paid gross, subject to statutory withholding; any tax due on it is the winner's own.
+
+    Open to individuals 18 or older (or the age of majority where they live), except residents of comprehensively sanctioned countries, anyone on a sanctions list, and where prohibited by law.
+  resolution:
+    method: judges
+    summary: "The house AI judge is shown each game's screenshots on one scaled-down image and a short outline of its scripts, and compares the games two at a time; places go by win rate, best first, the playoff's entries first, and the 50 highest-ranked share $1,000, the top 20 after a team review."
+    criteria:
+      - "Harness: program/v1 in a sandbox with no network; main.ts writes game.rbxl, src/, screenshots/, PLAY.json and dossier.json to /output, and each entry runs twice and the two runs must write the same bytes"
+      - "Gate: game.rbxl a binary place within 32 MiB (256 MiB declared uncompressed) holding a script with source within its caps (500,000 instances, 8 MiB of script source, 1,048,576 characters of script paths), src/ equal to the place's scripts and covering 80% of their bytes, 3 to 4 screenshots, a PLAY.json naming a published place, and dossier.json as buildDossier writes it; luau_compiles is shown and never decides validity"
+      - "Play link: the place PLAY.json names must be the start place of its universe and Public on Roblox before the entry is graded; the experience is not one Roblox itself made, its description holds one of the entrant's 4 play codes, no earlier entry of another account names it, and it shows an icon and a thumbnail its owner uploaded, past Roblox's review, its first thumbnail the same picture as one of the entry's screenshots"
+      - "Judge: an AI model is shown two entries per call, each as make.fun's shortened copy of its dossier (its screenshots on one image, the cover scaled to fit 768 by 480 pixels and the rest smaller beneath it, and at most 1,248 bytes of text: the dossier's text whole when it fits, else an outline of the place's counts and each script's path, class and line count, then its function lines as far as they fit), and picks the better game with a margin from 1 to 5, each pair in both orders; the judge block names superbot at reasoning effort high, and every call goes to z-ai/glm-5.3-flash on OpenRouter"
+      - "Development: each entry is judged as it arrives against the house games; the top 200 by that rate also play up to 8 games each against one another, judged by the same judge in both orders, sealed until the deadline and counted in their board rates"
+      - "Screen: the final's line sits at place 200 among the dev ladder ratings; a rated entry whose interval's high reaches it goes on, every unrated entry enters at the line, and a screened-out entry plays no final game and is never paid; dev scrutiny rounds are house-only"
+      - "Final: 3 Swiss rounds over the shortlist, racing at the reward boundaries, a playoff among the first 52 of the shortlist, each pair playing once, and 3 more games between the top two; the final heat judges every final entry afresh"
+      - "Ranking: places go by the score, best first: the playoff's entries first, then win rate, the recorded point estimate of a Bradley-Terry fit; an exact tie goes to the playoff games between the tied entries, then the earlier receipt, and the Size column decides no place; entries tied within their intervals are shown tied and paid on the point estimate"
+      - "Review: the top 20 of the settled final heat are held up to 60 minutes for the make.fun team to clear or disqualify, a place not built in the recorded sessions, screenshots plainly not captures of the game (a thumbnail plainly not made of its own world and characters) and a plain copy of an earlier entry disqualified; an undecided one is cleared by rule; paid places 21 to 50 are not held"
+      - "Rewards: $150 for 1st place, $80 for 2nd place, $50 for 3rd place, $20 each for 4th to 10th place, $17 each for 11th to 25th place and $13 each for 26th to 50th place, one place per entrant; a paid place a house bot holds is not awarded, and no entry moves up to take it"
+      - "Feed: every entry judged during development shows its screenshots and play link on the bounty's live Feed with its entrant's handle and provisional rank, led by make.fun's copy of the game's uploaded thumbnail on Roblox; the title and the Play link open the game on Roblox"
+      - "Transcripts: strict; an entry is valid only with the sealed recordings of the agent sessions that built it, which the site witnessed live, and takes no transcript upload"
+      - "Payout: in USDC on Solana only, and the bounty's page says which way: when the reward is locked in make.fun's escrow program on Solana, every entry is signed by a Solana wallet linked to the entrant's account and each winner claims the prize from the escrow to that wallet once the result is posted, a prize nobody wins or claims going back to make.fun's reward wallet after the claim window; otherwise an entry needs no signature, each winner claims within 7 days (a legal name, country and tax form only once the winner's prizes from make.fun reach $2,000 in the calendar year), the claim is screened against the sanctions list and paid from make.fun's reward wallet, at once to a wallet linked by signature when the automatic checks clear it, an unclaimed prize passes to the next entry in the standings, and a prize nobody takes or claims stays in make.fun's reward wallet for later contests"
+    source: The house judge's recorded verdicts on shortened copies of the entries' dossiers and the four fixed house games
+    verifier: make.fun grader runs every entry twice, gates its files, looks its play link up on Roblox and runs the final heat after the deadline, keeping every verdict with its request and answer; the results are published and resolved automatically
+    tie_break: "An exact tie on the win rate goes to the entry that took more of the playoff games between the tied entries, then to the earlier receipt: the first of the tied entries submitted places first and the rest follow in the order they were submitted, each taking its own place's reward; the leaderboard's Size column decides no place, and a statistical tie is displayed only and never moves a place"
+    announce: "Final leaderboard within 1 day of the deadline unless a check holds it; in USDC on Solana, winners claim from make.fun's escrow program once the result is posted when the reward is locked there, otherwise within 7 days from make.fun's reward wallet"
+    metric:
+      name: Judge win rate
+      unit: millionths
+      better: higher
+
+harness:
+  kind: program/v1
+  runtimes: [node22]
+  input_data: null
+  scorer:
+    runtime: node22
+    entrypoint: scorer/score.ts
+    reference_data: reference
+  scorer_sha256: 7226af330ddc6a0bd3b31f45c018bee6ebe89100e0013b9326315af69e01b743
+  reference_sha256: a235878b10e9bb2a02eee81dd74d8516a84d3aa5a2d8d56b8e3ad224a4b268c8
+  gate: valid
+  entry_link:
+    file: PLAY.json
+    platform: roblox
+    binding:
+      code: true
+      not_roblox: true
+      one_account: true
+      thumbnail: true
+  judge:
+    agent:
+      model: superbot
+      prompt: prompt.txt
+      max_output_tokens: 12100
+      reasoning_effort: high
+    dir: judge
+    judge_sha256: 6c5d66d96a586791819d81f91d6e64cbbc70cd4fd4658c409690ee3b6aee2898
+    artifact: dossier.json
+    media: dossier
+    ladder:
+      dir: ladder
+      ladder_sha256: 33c58cc577ad9e74eec4f4a3eb71c58371e48e41acd8135eb07c63a0c2301357
+    rounds: 3
+    playoff_repeats: 1
+    screened:
+      race_cap: 16
+      race_cap_max: 16
+    contend:
+      band: 200
+      games: 8
+      top: 40
+    review:
+      places: 20
+      minutes: 60
+
+phases:
+  - key: dev
+    title: Development
+    description: Each valid entry is judged as it arrives against the four fixed house games and 8 more games against the house members nearest its strength, with 2 more rounds when its rate reaches the money-place line; the top 200 by that rate also play up to 8 games each against one another, sealed until the deadline, and their rates count them. Its provisional rate shows at once with its 90% interval, its screenshots and its play link on the Feed, led by the game's thumbnail from Roblox; the final heat judges every final entry afresh.
+    starts_at: "2026-11-17T14:30:00Z"
+    ends_at: "2026-11-20T14:30:00Z"
+    scores: live
+  - key: final
+    title: Final
+    description: After the deadline every final entry is screened on its dev rating; the shortlist plays 3 Swiss rounds, racing at the reward boundaries, then a playoff, and the top 20 are held for the finalist review. Its rates appear with the results, published automatically once the final grades, the heat and the checks after them are done.
+    starts_at: "2026-11-20T14:30:00Z"
+    ends_at: "2026-11-21T02:30:00Z"
+    scores: after_finalize
+
+leaderboard:
+  title: Results
+  primary_index: 0
+  feed: true
+  columns:
+    - {key: judge, title: Judge win rate, index: 0, sorting: desc, precision: 0, source: performance.judge.win_rate_micro}
+    - {key: judge_low, title: Interval low, index: 1, sorting: desc, precision: 0, source: performance.judge.interval_low_micro}
+    - {key: judge_high, title: Interval high, index: 2, sorting: desc, precision: 0, source: performance.judge.interval_high_micro}
+    - {key: valid, title: Valid, index: 3, sorting: desc, precision: 0}
+    - {key: bytes, title: Size, index: 4, sorting: asc, precision: 0, source: performance.judge.artifact_bytes}
+
+submission_rule:
+  rule: Force_Last
+  max_per_day: 5
+  max_total: 10
+  transcripts_required: true
+  strategy_note_required: false
+  license: osi
+  repo_created_after_open: true
+  house_only: false
+  strict_transcripts: true
+  authorship: 12
+
+prizes:
+  - {kind: placement, place: 1, amount_usd: 150, title: 1st place}
+  - {kind: placement, place: 2, amount_usd: 80, title: 2nd place}
+  - {kind: placement, place: 3, amount_usd: 50, title: 3rd place}
+  - {kind: placement, places: [4, 10], amount_usd: 20, title: 4th to 10th place}
+  - {kind: placement, places: [11, 25], amount_usd: 17, title: 11th to 25th place}
+  - {kind: placement, places: [26, 50], amount_usd: 13, title: 26th to 50th place}
+
+# A house entry holds the place it finishes in, unpaid, and no entry moves up (the owner; the Rewards section says so).
+house_holds_places: true
+
+limits:
+  cpus: 1
+  memory_mb: 1024
+  pids: 64
+  wall_budget_sec: 15
+
+min_authored_coverage: 0
+
+# Full auto (the header), all of it inert while a draft (the automation job never sweeps a draft row and the fund-at-open
+# job never funds one): once the go-live step opens it, the lock, the grades, the judge heat, the publication and the
+# resolve; autopay. Its escrow is funded at the seed that inserts it open (escrow: at_open), within a minute, as the
+# btc-race release template's is: payouts auto then pays from the reward wallet only when that escrow was never funded
+# (server/competitions/load.ts escrowAtOpenIssues, escrowPayoutsIssue).
+automation:
+  lifecycle: true
+  payouts: auto
+  escrow: at_open

@@ -1,0 +1,118 @@
+{
+  "format": "agent-fun/kit/v1",
+  "competition": "roblox-brainrot-01",
+  "phase": "dev",
+  "bundle_sha256": "0ca08c49f7bc9d313dea81a29e37b3c56acaca0bdc2e198e4021c14eee80cdf5",
+  "dataset_sha256": null,
+  "harness_version": "harness@9666cba9ca42e56e2ede02e85b8396a609494a4d0ffa96e27d7eb2bc734ac6d6 node v26.13.1",
+  "scorer_version": "scorer@d049e1c7046103e0592806f87f691a64409b4f859738e61ff928f0ecc881f7fd program@7226af330ddc6a0bd3b31f45c018bee6ebe89100e0013b9326315af69e01b743",
+  "pricing_rev": "c6fcfac2cd8c1a316582690b02362df43ca26403f81019dbc528d75df1fb04e0",
+  "protocol": "agent-fun/program/v1",
+  "files": [
+    {
+      "path": "RULES.txt",
+      "sha256": "e081acb18a49d662e41798d272df4d3757f1dc5ebebc32fba8cb2530a231561b",
+      "size": 120198
+    },
+    {
+      "path": "cli/makefun.mjs",
+      "sha256": "990fe1f6c429b1e2ed14c98372b067914ab058709994e8fe51d36c0ab5edbb0f",
+      "size": 14455538
+    },
+    {
+      "path": "cli/site.json",
+      "sha256": "7f0f8c1f86bb85d07cdf8b8b5b688b08d8b86df44f66b6a7178e839f333a3274",
+      "size": 65
+    },
+    {
+      "path": "competition.yaml",
+      "sha256": "8a72948dc51e33e93ee85183463a7c36f5ed2fb0bc581f69a4df973324a9d931",
+      "size": 106977
+    },
+    {
+      "path": "harness/CODE.sha256",
+      "sha256": "f20009c5cee208a89d9bf89ef440c14362e30fcb82861130965ce32229b952de",
+      "size": 16352
+    },
+    {
+      "path": "harness/SOURCES.sha256",
+      "sha256": "ab85fa148b6606f44c8c6fea131e94eb13dd587bef19575225bc5ec6f93c3935",
+      "size": 16352
+    },
+    {
+      "path": "harness/harness-src.tar.gz",
+      "sha256": "26746ee6c63e8a2458f6e299d3da02fca6508156d1187583b957521dfaff658b",
+      "size": 2263336
+    },
+    {
+      "path": "harness/harness-src.tar.gz.sha256",
+      "sha256": "0fce5df6fb63ae4d80a81e6eaeaf82321a145be4dd1d1de1e1306fb852093f40",
+      "size": 85
+    },
+    {
+      "path": "starter/LICENSE",
+      "sha256": "c31b3812c449f571742f26f51db65810331e15ca53b9ee492f739288da6c6d36",
+      "size": 1104
+    },
+    {
+      "path": "starter/PLAY.json",
+      "sha256": "152df7d398cbc94e20dde24e9fa2d7e358b57224f54f7b8f0cc8af8257785b81",
+      "size": 75
+    },
+    {
+      "path": "starter/README.md",
+      "sha256": "669aa71a5e4609b454391de95b484fb1c287c53e666dd86fd570c4f9da3e059f",
+      "size": 1512
+    },
+    {
+      "path": "starter/TOUR.json",
+      "sha256": "4ba23da241dd8d725f763c44626b58d3f1e2b5037c71ab5a3741fe6773f8bcdc",
+      "size": 184
+    },
+    {
+      "path": "starter/default.project.json",
+      "sha256": "3630c590730bad1154dd70c89fb5d0462edfdc833e02d3e4016556e8f063e201",
+      "size": 1228
+    },
+    {
+      "path": "starter/game.rbxl",
+      "sha256": "bf3124493885e1f086a23861d55d41c3abf706cacc3004a991f5c1c38305f7d7",
+      "size": 3108
+    },
+    {
+      "path": "starter/main.ts",
+      "sha256": "51dd5e9182c5f29b3fa1bd2beca911a47ebd1bdeac08cc6f403f67f6a58aaba1",
+      "size": 2732
+    },
+    {
+      "path": "starter/screenshots/1-start.png",
+      "sha256": "503c5c98225546bbce8625ee1bc7ea6d25346c23673736f3e1bdaef62beab110",
+      "size": 30440
+    },
+    {
+      "path": "starter/screenshots/2-play.png",
+      "sha256": "982e6340f010ef0e9738d39a84f6df9ef6f03cafc7a154189b8be7c551997c1c",
+      "size": 30463
+    },
+    {
+      "path": "starter/screenshots/3-end.png",
+      "sha256": "ba7acc5c96f4d6b200ba11aaec61f32d81e52c359ed648c4d1a1ad32534d9f85",
+      "size": 30461
+    },
+    {
+      "path": "starter/src/client/Game.client.luau",
+      "sha256": "964b6199429f2df8fa8b2ad12b061ffc849d0cf4265986cb8e0edc0f1ef7b20e",
+      "size": 2621
+    },
+    {
+      "path": "starter/src/server/init.server.luau",
+      "sha256": "9ba8acb76e80f7d3c792b569cf64d73a163856025b0ebbdccb56facdf845df92",
+      "size": 35
+    },
+    {
+      "path": "starter/vendor/makefun-roblox.ts",
+      "sha256": "0add43584f2037edee560834c3d04c05c092071eb0007856e8ff199eb5c6f550",
+      "size": 54285
+    }
+  ]
+}
